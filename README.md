@@ -135,9 +135,26 @@ No API keys needed — the app uses free, keyless services (CartoDB tiles, Open-
 
 ## Roadmap
 
+### Crowdsourced Data — Making the Dataset Richer
+
+The app currently ships with 30 curated spots, but the real power comes when **thousands of photographers contribute their own hidden gems**. The crowdsourcing roadmap:
+
+- [ ] **Public spot submissions with moderation** — Anyone can submit a spot via the `/submit` form. Submissions go into a review queue. Approved spots are merged into the live dataset, credited to the contributor.
+- [ ] **User accounts & profiles** — Sign in with Google/GitHub. Your profile shows all spots you've contributed, your upvotes, and a "Scout Score" reputation badge (Explorer, Pathfinder, Trailblazer) based on contribution quality.
+- [ ] **Upvote & verify system** — Community members can upvote spots and mark them as "Verified" (I've been here, the info is accurate). Higher-verified spots rank higher in search and get the "Community Verified" badge.
+- [ ] **Photo uploads per spot** — Contributors can attach their own photos (Cloudinary-hosted) to any spot, building a real gallery that shows the location in different seasons, light conditions, and compositions.
+- [ ] **Edits & corrections** — Wiki-style edit suggestions: update access notes, flag a closed trail, add a new festival, correct GPS — reviewed by spot owner or moderators before going live.
+- [ ] **Comments & shot logs** — Photographers leave timestamped notes: "Visited Mar 2026, fog cleared by 7:30am, 70-200mm was perfect from the east bank." Over time this builds a living knowledge base per spot.
+- [ ] **Regional ambassadors** — Verified local photographers who moderate submissions for their region, ensuring data quality stays high as the dataset scales.
+- [ ] **Bulk import via GPS-tagged photos** — Drag-drop a batch of GPS-tagged images, and the app auto-extracts coordinates, clusters nearby shots into spots, and pre-fills the submission form.
+- [ ] **Open data API** — A public REST API (`/api/spots`) so third-party apps, travel blogs, and mapping tools can query the crowdsourced dataset (with attribution).
+
+The goal: go from 30 curated spots to **5,000+ community-verified locations** across every state in India, with real photographer data that no single person could ever collect alone.
+
+### Other Enhancements
+
 - [ ] **Database** — Move from static JSON to PostgreSQL + PostGIS (Supabase)
 - [ ] **User auth** — Google OAuth via NextAuth for accounts + spot ownership
-- [ ] **Photo uploads** — Cloudinary integration for community-submitted images
 - [ ] **Offline mode** — Cache spots + sun data for field use without connectivity
 - [ ] **Drone/permit overlay** — Show DGCA no-fly zones and permit requirements on the map
 - [ ] **Mobile app** — React Native wrapper with native map + GPS
