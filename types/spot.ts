@@ -40,7 +40,7 @@ export interface PhotoSpot {
   id: string;
   name: string;
   description: string;
-  region: Region;
+  region: Region | string;
   state: string;
   lat: number;
   lng: number;
@@ -57,8 +57,12 @@ export interface PhotoSpot {
   festivalNearby?: string[];
   tips: string;
   parkingNotes?: string;
-  coverImage: string; // Unsplash URL
+  coverImage: string;
   tags: string[];
   elevation?: number; // metres
   featured: boolean;
+  // Community submission fields
+  source?: "curated" | "community";
+  submittedBy?: string;
+  status?: "pending" | "approved" | "rejected";
 }

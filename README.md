@@ -2,7 +2,7 @@
 
 **Discover the best photography spots across India. Plan your shoot with exact golden hour times, sun direction, live weather, and community tips.**
 
-> [Live App](https://india-lens.vercel.app) &nbsp;|&nbsp; Built with Next.js, Leaflet, SunCalc & Open-Meteo
+> **[Live App](https://india-lens-three.vercel.app)** &nbsp;|&nbsp; Built with Next.js, Leaflet, SunCalc & Open-Meteo
 
 ![IndiaLens Map View](https://images.unsplash.com/photo-1564507592333-c60657eea523?w=1200&q=80)
 

@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getSpotById, MONTH_NAMES } from "@/lib/spots";
+import { getDb } from "@/lib/db";
+import { dbRowToPhotoSpot } from "@/lib/community";
 import SunInfo from "@/components/SunInfo";
 import WeatherWidget from "@/components/WeatherWidget";
 import {
@@ -47,7 +49,25 @@ interface PageProps {
 
 export default async function SpotPage({ params }: PageProps) {
   const { id } = await params;
-  const spot = getSpotById(id);
+  let spot = getSpotById(id);
+
+  // Check community spots if not found in curated
+  if (!spot && id.startsWith("community-")) {
+    const slug = id.replace("community-", "");
+    try {
+      const sql = getDb();
+      const rows = await sql`
+        SELECT * FROM community_spots WHERE slug = ${slug} AND status = 'approved'
+      `;
+      if (rows.length > 0) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        spot = dbRowToPhotoSpot(rows[0] as any);
+      }
+    } catch {
+      // DB not available, skip
+    }
+  }
+
   if (!spot) notFound();
 
   const crowd = crowdConfig[spot.crowdLevel];

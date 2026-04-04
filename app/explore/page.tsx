@@ -1,13 +1,30 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { spots, ALL_REGIONS, ALL_SHOT_TYPES, MONTH_NAMES } from "@/lib/spots";
+import { useState, useMemo, useEffect } from "react";
+import { spots as curatedSpots, ALL_REGIONS, ALL_SHOT_TYPES, MONTH_NAMES } from "@/lib/spots";
+import { dbRowToPhotoSpot } from "@/lib/community";
+import { PhotoSpot } from "@/types/spot";
 import SpotCard from "@/components/SpotCard";
 import { Camera, Telescope } from "lucide-react";
 
 const CURRENT_MONTH = new Date().getMonth() + 1;
 
 export default function ExplorePage() {
+  const [communitySpots, setCommunitySpots] = useState<PhotoSpot[]>([]);
+
+  useEffect(() => {
+    fetch("/api/spots?status=approved")
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.spots) setCommunitySpots(data.spots.map(dbRowToPhotoSpot));
+      })
+      .catch(() => {});
+  }, []);
+
+  const spots = useMemo(
+    () => [...curatedSpots, ...communitySpots],
+    [communitySpots]
+  );
   const [activeRegion, setActiveRegion] = useState<string | null>(null);
   const [activeShotType, setActiveShotType] = useState<string | null>(null);
   const [activeMonth, setActiveMonth] = useState<number | null>(null);
@@ -61,7 +78,7 @@ export default function ExplorePage() {
           <h1 className="text-3xl font-bold text-white">Explore India</h1>
         </div>
         <p className="text-stone-400 max-w-lg mx-auto">
-          {spots.length} curated photography locations across India — filter by region, shot type, or the best month to visit.
+          {spots.length} photography locations across India — filter by region, shot type, or the best month to visit.
         </p>
       </div>
 
